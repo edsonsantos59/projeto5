@@ -1,0 +1,37 @@
+{% extends "projeto5_website/base.html" %}
+{% block content %}
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+				<h2>
+					Teste de Análise de Perfil
+        </h2>
+			</div>
+    </div>
+  </div>
+  <form method="post">
+    {% csrf_token %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+            {% for pergunta,alternativas in perguntas.items %}
+              <h3>{{pergunta}}</h3>
+              <fieldset>
+                {% for alternativa in alternativas %}
+                  <input type="radio" name="{{pergunta}}" value="{{alternativa.perfil}}">
+                  <label>{{alternativa.conteudo}}</label><br>
+                {% endfor %}
+              </fieldset>
+            {% endfor %}
+            <button type="submit">
+              Enviar
+            </button>
+        </div>
+      </div>
+    </div> 
+  </form>
+</div>
+
+{% endblock %}

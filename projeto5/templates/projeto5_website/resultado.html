@@ -1,0 +1,42 @@
+{% extends "projeto5_website/base.html" %}
+{% block content %}
+<div id="div-teste">
+  <h1 align="center">Resultado</h1>
+</div>
+  <table class="table" id="table" >
+    <thead>
+      <tr class="tabela">
+        <td>Aluno</td>
+        <td>Resultado</td>
+      </tr>
+    </thead>
+    <tbody>
+      {% for resultado in resultados %}
+        <tr>
+          <td >{{resultado.aluno.nome}}</td>
+          <td>
+            <div class="progress" style="max-width: 90%">
+              <div title="Dominância"
+                  style="width: {% widthratio resultado.dominancia 1 100 %}%">
+                  {% widthratio resultado.dominancia 1 100 %}
+              </div>
+              <div title="Influencia"
+                  style="width: {% widthratio resultado.influencia 1 100 %}%">
+                  {% widthratio resultado.influencia 1 100 %}
+              </div>
+              <div title="Cautela"
+                  style="width: {% widthratio resultado.cautela 1 100 %}%">
+                  {% widthratio resultado.cautela 1 100 %}
+              </div>
+              <div title="Estabilidade" 
+                  style="width: {% widthratio resultado.estabilidade 1 100 %}%">
+                  {% widthratio resultado.estabilidade 1 100 %}
+              </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+</div>
+{% endblock %}

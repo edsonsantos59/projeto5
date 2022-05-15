@@ -1,0 +1,127 @@
+from django.shortcuts import render
+from projeto5_website.models import Aluno, CHOICES_ALTERNATIVA, Alternativa, Pergunta, Resultado
+from datetime import datetime
+from django.http import HttpResponseRedirect
+from projeto5_website.forms import PerguntaForm
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
+from django.views.decorators.csrf import csrf_protect
+
+# Create your views here.
+
+def home(request):
+  return render(request, "projeto5_website/home.html")
+
+@login_required(login_url='/login/')
+def pergunta_form(request):
+  i = 0
+  if request.method == "POST":
+    form = PerguntaForm(request.POST)
+    if form.is_valid():
+      form.save()
+      return HttpResponseRedirect('/') #Lembrar de importar
+  else:
+    form = PerguntaForm()
+  return render(request, "projeto5_website/pergunta_form.html", 
+  {"perguntas": Pergunta.objects.all(),
+  "alternativas": Alternativa.objects.filter(pergunta=1)})
+
+def login_user(request):
+    logout(request)
+    username = password = ''
+    if request.POST:
+      username = request.POST['username']
+      password = request.POST['password']
+      user = authenticate(username=username, password=password)
+      if user is not None:
+          if user.is_active:
+            if user.is_staff == True:
+              login(request, user)
+              return HttpResponseRedirect('/admin/')
+            else:
+                login(request, user)
+                return HttpResponseRedirect('/pergunta_form/')
+    return render(request, 'projeto5_website/login.html')
+
+@login_required(login_url='/login/')
+def obrigado(request):
+  return render(request, "projeto5_website/obrigado.html")
+
+@login_required(login_url='/login/')
+def resultado(request):
+  if request.method == 'POST':
+        busca = request.POST['buscaAluno']
+        if not busca:
+            alunos = Aluno.objects.all()
+            return render(request, "projeto5_website/resultado.html",
+                          {"resultados": Resultado.objects.filter(aluno__in=alunos),
+                           "navbar_resultados": "active"})
+        else:
+            alunos = Aluno.objects.filter(nome__icontains=busca)
+            return render(request, "projeto5_website/resultado.html",
+                          {"resultados": Resultado.objects.filter(aluno__in=alunos),
+                           "navbar_resultados": "active"})
+  else:
+      alunos = Aluno.objects.all()
+
+  return render(request, "projeto5_website/resultado.html",
+                {"resultados": Resultado.objects.filter(aluno__in=alunos),
+                  "navbar_resultados" : "active"})
+
+@login_required(login_url='/login/')                  
+def test(request):
+    #TODO: Criar um dicionario de perguntas/alternativas
+    perguntas_dict = {}
+    if request.method == "GET":
+        for pergunta in Pergunta.objects.filter():
+            perguntas_dict[pergunta.enunciado] = Alternativa.objects.filter(pergunta=pergunta)
+        return render(request, "projeto5_website/test.html",
+                      {"perguntas": perguntas_dict, "navbar_teste" : "active"})
+    elif request.method == "POST":
+        if len(request.POST) == 28:
+            totalRespostas = 0
+            respostas_dict = {
+                "1" : 0,
+                "2" : 0,
+                "3" : 0,
+                "4" : 0,
+            }
+            ra = request.POST["ra"]
+            email = request.POST["email"]
+            nome = request.POST["nome"]
+
+            for chave, conteudo in request.POST.items():
+                if chave not in ["csrfmiddlewaretoken", 'ra', 'email', 'nome']:
+                    respostas_dict[conteudo[0]] += 1
+                    totalRespostas += 1
+        
+            for chave, conteudo in respostas_dict.items():
+                respostas_dict[chave] = respostas_dict[chave] / totalRespostas
+                
+            try:
+                aluno = Aluno.objects.get(ra=ra)
+            
+            except Aluno.DoesNotExist:
+                aluno = Aluno()
+                aluno.ra = ra
+                aluno.nome = nome
+                aluno.email = email
+                aluno.save()
+                
+            resultado = Resultado()
+            for escolha, nome in CHOICES_ALTERNATIVA:
+                setattr(resultado, nome, respostas_dict[str(escolha)])
+            
+            resultado.data_fim = resultado.data_ini = datetime.now()
+            resultado.aluno = aluno
+            resultado.save()
+            
+            return HttpResponseRedirect("/obrigado/")
+
+def index(request):
+  return render (request, "projeto5_website/index.html")
+
+@login_required(login_url='/login/')
+def logout_user(request):
+  logout(request)
+  return render (request, "projeto5_website/logout.html")
