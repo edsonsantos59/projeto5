@@ -40,7 +40,7 @@ def login_user(request):
               return HttpResponseRedirect('/admin/')
             else:
                 login(request, user)
-                return HttpResponseRedirect('/pergunta_form/')
+                return HttpResponseRedirect('/test/')
     return render(request, 'projeto5_website/login.html')
 
 @login_required(login_url='/login/')

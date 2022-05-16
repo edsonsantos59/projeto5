@@ -77,10 +77,3 @@ class Alternativa(models.Model):
     return ' - '.join([self.conteudo, 
         self.pergunta.__str__()[:15]+'...',
         self.pergunta.teste.__str__()])
-
-class Link(models.Model):
-  expire_date = models.DateTimeField()
-
-  @property
-  def link(self):
-    return '{}/{}'.format('http://127.0.0.1:8000/test', str(self.id))
