@@ -6,6 +6,7 @@ from projeto5_website.forms import PerguntaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.csrf import csrf_protect
+from django.utils.text import slugify
 
 # Create your views here.
 
@@ -78,7 +79,7 @@ def test(request):
         return render(request, "projeto5_website/test.html",
                       {"perguntas": perguntas_dict, "navbar_teste" : "active"})
     elif request.method == "POST":
-        if len(request.POST) == 28:
+        if len(request.POST) > 0:
             totalRespostas = 0
             respostas_dict = {
                 "1" : 0,
@@ -86,6 +87,21 @@ def test(request):
                 "3" : 0,
                 "4" : 0,
             }
+            
+            def save(self, *args, **kwargs): 
+              maior = self.dominancia
+              self.resultado_final = 'dominancia'
+              if self.cautela > maior:
+                maior = self.cautela
+                self.resultado_final = 'cautela'
+              if self.influencia > maior:
+                maior = self.influencia
+                self.resultado_final = 'influencia'
+              if self.estabilidade > maior:
+                maior = self.estabilidade
+                self.resultado_final = 'estabilidade'
+              super(test, self.maior).save(*args, **kwargs)
+            print(request.POST)
             ra = request.POST["ra"]
             email = request.POST["email"]
             nome = request.POST["nome"]

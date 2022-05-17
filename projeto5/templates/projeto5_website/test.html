@@ -15,6 +15,9 @@
     {% csrf_token %}
     <div class="container-fluid">
       <div class="row">
+        <input type="text" width="30px" name="nome" placeholder="Digite seu Nome">
+        <input type="text" name="email" placeholder="Digite seu Email">
+        <input type="text" name="ra" placeholder="Digite seu RA">
         <div class="col-md-12">
             {% for pergunta,alternativas in perguntas.items %}
               <h3>{{pergunta}}</h3>

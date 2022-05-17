@@ -1,5 +1,23 @@
 from django.db import models
 import uuid
+from django.utils.text import slugify  
+class GeeksModel(models.Model): 
+    title = models.CharField(max_length = 200) 
+    slug = models.SlugField() 
+
+    def save(self, *args, **kwargs): 
+      maior = self.dominancia
+      self.resultado_final = 'dominancia'
+      if self.cautela > maior:
+        maior = self.cautela
+        self.resultado_final = 'cautela'
+      if self.influencia > maior:
+        maior = self.influencia
+        self.resultado_final = 'influencia'
+      if self.estabilidade > maior:
+        maior = self.estabilidade
+        self.resultado_final = 'estabilidade'
+      super(Resultado, self).save(*args, **kwargs)
 
 # Create your models here.
 
@@ -25,6 +43,7 @@ class Resultado(models.Model):
   dominancia = models.FloatField()
   cautela = models.FloatField()
   estabilidade = models.FloatField()
+  resultado_final = models.CharField(max_length=50)
 
   # verifica o resultado final e retorna como string
   def get_resultado_final(self):

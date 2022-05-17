@@ -3,7 +3,7 @@ from projeto5_website.models import Pergunta, Alternativa, Teste, Resultado, Alu
 # Register your models here.
 
 class ResultadoAdmin(admin.ModelAdmin):
-    list_display = ('aluno', 'dominancia', 'cautela', 'estabilidade', 'influencia')
+    list_display = ('aluno', 'dominancia', 'cautela', 'estabilidade', 'influencia', 'resultado_final')
     search_fields = ('aluno__ra__icontains',)
 
 
