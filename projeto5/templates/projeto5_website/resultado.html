@@ -7,33 +7,60 @@
     <thead>
       <tr class="tabela">
         <td>Aluno</td>
-        <td>Resultado</td>
+        <td>Dominância</td>
+        <td>Influência</td>
+        <td>Cautela</td>
+        <td>Estabilidade</td>
       </tr>
     </thead>
     <tbody>
+      <td width="40%">
+        <h5 style="display: inline-block">Predominância:</h5>
+        <div>
+          <label class="progress-bar " style="display: inline-block; width: 125px; padding: 1%" id="dominancia" name="dominancia"
+              checked="dominancia"> Dominância
+          </label>
+          <label class="progress-bar bg-success" style="display: inline-block; width: 125px; padding: 1%" id="influencia" name="influencia"
+              checked="influencia"> Influência
+          </label>
+          <label class="progress-bar bg-danger progress-bar-stripped" style="display: inline-block; width: 125px; padding: 1%" id="cautela" name="cautela"
+              checked="cautela"> Cautela
+          </label>
+          <label class="progress-bar bg-warning progress-bar-stx'ripped" style="display: inline-block; width: 125px; padding: 1%" id="estabilidade" name="estabilidade"
+              checked="estabilidade"> Estabilidade
+          </label>
+        </div>
+      </td>
       {% for resultado in resultados %}
         <tr>
           <td >{{resultado.aluno.nome}}</td>
           <td>
-            <div class="progress" style="max-width: 90%">
-              <div title="Dominância"
+            <div class="progress" style="max-width: 80%">
+              <div title="Dominância" class="progress-bar"
                   style="width: {% widthratio resultado.dominancia 1 100 %}%">
                   {% widthratio resultado.dominancia 1 100 %}
               </div>
-              <div title="Influencia"
-                  style="width: {% widthratio resultado.influencia 1 100 %}%">
-                  {% widthratio resultado.influencia 1 100 %}
-              </div>
-              <div title="Cautela"
-                  style="width: {% widthratio resultado.cautela 1 100 %}%">
-                  {% widthratio resultado.cautela 1 100 %}
-              </div>
-              <div title="Estabilidade" 
-                  style="width: {% widthratio resultado.estabilidade 1 100 %}%">
-                  {% widthratio resultado.estabilidade 1 100 %}
-              </div>
+          </td>
+          <td>
+            <div title="Influencia" class="progress-bar bg-success"
+                style="width: {% widthratio resultado.influencia 1 100 %}%">
+                {% widthratio resultado.influencia 1 100 %}
             </div>
           </td>
+          <td>
+            <div title="Cautela" class="progress-bar bg-danger"
+                style="width: {% widthratio resultado.cautela 1 100 %}%">
+                {% widthratio resultado.cautela 1 100 %}
+            </div>
+          </td>
+          <td>
+            <div title="Estabilidade" class="progress-bar bg-warning"
+                style="width: {% widthratio resultado.estabilidade 1 100 %}%">
+                {% widthratio resultado.estabilidade 1 100 %}
+            </div>
+          </td>
+          </div>
+        </td>
         </tr>
       {% endfor %}
       </tbody>
