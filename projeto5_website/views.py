@@ -38,7 +38,7 @@ def login_user(request):
           if user.is_active:
             if user.is_staff == True:
               login(request, user)
-              return HttpResponseRedirect('/admin/')
+              return HttpResponseRedirect('/resultado/')
             else:
                 login(request, user)
                 return HttpResponseRedirect('/test/')
