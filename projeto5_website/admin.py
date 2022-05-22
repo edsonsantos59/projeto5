@@ -1,19 +1,21 @@
 from django.contrib import admin
 from projeto5_website.models import Pergunta, Alternativa, Teste, Resultado, Aluno, Turma
-# Register your models here.
+from django.contrib.admin.filters import SimpleListFilter
 
+from projeto5_website.views import resultado
+# Register your models here.
 class ResultadoAdmin(admin.ModelAdmin):
     list_display = ('aluno', 'dominancia', 'cautela', 'estabilidade', 'influencia', 'resultado_final')
-    search_fields = ('aluno__ra__icontains',)
+    list_filter = ('aluno', 'resultado_final',)
 
 
 class AlunoAdmin(admin.ModelAdmin):
     list_display = ('ra', 'nome', 'email')
-    search_fields = ('ra__icontains', 'nome__icontains')
+    list_filter = ('ra', 'nome', 'email')
 
 admin.site.register(Pergunta)
 admin.site.register(Alternativa)
 admin.site.register(Teste)
-admin.site.register(Resultado)
-admin.site.register(Aluno)
+admin.site.register(Resultado, ResultadoAdmin)
+admin.site.register(Aluno, AlunoAdmin)
 admin.site.register(Turma)

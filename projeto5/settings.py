@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'projeto5_website',
     'django_extensions',
-
+    'django_filters',
 ]
 
 GRAPH_MODELS = {

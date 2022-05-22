@@ -64,8 +64,7 @@ class Resultado(models.Model):
     super(Resultado, self).save(*args, **kwargs)
   
   def __str__(self):
-      return ' - '.join([str(self.aluno.ra), self.data_fim.isoformat()])
-
+      return ' - '.join([str(self.aluno.ra)])
 
 class Teste(models.Model):
   nome = models.CharField(max_length=30)

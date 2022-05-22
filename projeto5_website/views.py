@@ -55,18 +55,18 @@ def resultado(request):
         if not busca:
             alunos = Aluno.objects.all()
             return render(request, "projeto5_website/resultado.html",
-                          {"resultados": Resultado.objects.filter(aluno__in=alunos),
+                          {"resultados": Resultado.objects.all(),
                            "navbar_resultados": "active"})
         else:
-            alunos = Aluno.objects.filter(nome__icontains=busca)
+            alunos = Aluno.objects.all()
             return render(request, "projeto5_website/resultado.html",
-                          {"resultados": Resultado.objects.filter(aluno__in=alunos),
+                          {"resultados": Resultado.objects.all(),
                            "navbar_resultados": "active"})
   else:
       alunos = Aluno.objects.all()
 
   return render(request, "projeto5_website/resultado.html",
-                {"resultados": Resultado.objects.filter(aluno__in=alunos),
+                {"resultados": Resultado.objects.all(),
                   "navbar_resultados" : "active"})
 
 @login_required(login_url='/login/')                  
