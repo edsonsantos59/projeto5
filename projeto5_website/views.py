@@ -5,10 +5,6 @@ from django.http import HttpResponseRedirect
 from projeto5_website.forms import PerguntaForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
-from django.views.decorators.csrf import csrf_protect
-from django.utils.text import slugify
-
-# Create your views here.
 
 def home(request):
   return render(request, "projeto5_website/home.html")
@@ -20,7 +16,7 @@ def pergunta_form(request):
     form = PerguntaForm(request.POST)
     if form.is_valid():
       form.save()
-      return HttpResponseRedirect('/') #Lembrar de importar
+      return HttpResponseRedirect('/')
   else:
     form = PerguntaForm()
   return render(request, "projeto5_website/pergunta_form.html", 
@@ -71,7 +67,8 @@ def resultado(request):
 
 @login_required(login_url='/login/')                  
 def test(request):
-    #TODO: Criar um dicionario de perguntas/alternativas
+  try:
+    #TODO:
     perguntas_dict = {}
     if request.method == "GET":
         for pergunta in Pergunta.objects.filter():
@@ -133,6 +130,10 @@ def test(request):
             resultado.save()
             
             return HttpResponseRedirect("/obrigado/")
+  except ZeroDivisionError or NameError:
+    return HttpResponseRedirect("/test/")
+  except ValueError:
+    return HttpResponseRedirect("/test/")
 
 def index(request):
   return render (request, "projeto5_website/index.html")

@@ -1,9 +1,6 @@
 from django.contrib import admin
 from projeto5_website.models import Pergunta, Alternativa, Teste, Resultado, Aluno, Turma
-from django.contrib.admin.filters import SimpleListFilter
 
-from projeto5_website.views import resultado
-# Register your models here.
 class ResultadoAdmin(admin.ModelAdmin):
     list_display = ('aluno', 'dominancia', 'cautela', 'estabilidade', 'influencia', 'resultado_final')
     list_filter = ('aluno', 'resultado_final',)

@@ -19,12 +19,10 @@ class GeeksModel(models.Model):
         self.resultado_final = 'estabilidade'
       super(Resultado, self).save(*args, **kwargs)
 
-# Create your models here.
-
 class Turma(models.Model):
   curso = models.CharField(max_length=50)
   ano = models.IntegerField()
-  semestre = models.IntegerField() #TODO: Semestre é um enum
+  semestre = models.IntegerField() #TODO:
 
 
 class Aluno(models.Model):
@@ -45,7 +43,6 @@ class Resultado(models.Model):
   estabilidade = models.FloatField()
   resultado_final = models.CharField(max_length=50)
 
-  # verifica o resultado final e retorna como string
   def get_resultado_final(self):
     res_perfis = [("Dominante", self.dominancia), 
                   ("Influente",self.influencia), 
@@ -58,7 +55,6 @@ class Resultado(models.Model):
         res += perfil[0] + ' '
     return res
 
-  # chama get_resultado_final() e armazena o valor na propriedade resultado_final
   def save(self, *args, **kwargs): 
     self.resultado_final = self.get_resultado_final()
     super(Resultado, self).save(*args, **kwargs)
