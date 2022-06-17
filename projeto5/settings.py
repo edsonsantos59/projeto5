@@ -95,3 +95,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+AWS_ACCESS_KEY_ID = 'AKIAS2UVFZ3WHRKY7BLD'
+AWS_SECRET_ACCESS_KEY = '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'
+AWS_STORAGE_BUCKET_NAME = 'discbiogrupo'
+AWS_QUERYSTRING_AUTH = False
